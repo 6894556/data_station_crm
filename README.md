@@ -1,4 +1,26 @@
-# Pandas 
+# Pandas
+
+
+
+
+## indexing
+- 행 단위 indexing (df로만 return)
+> - df.head(n): 상위 n개 행 추출
+> - df.tail(m): 하위 m개 행 추출
+> - df.iloc[row_idx_n : row_idx_m]: m행부터 n행까지 행 추출 (iloc : index location) (list sclicing과 같은 logic)
+- 열 단위 indexing (ser 또는 df를 return)
+> - df["col"]: col열만 ser 형태로 추출
+> - df[["col"]]: col열만 df 형태로 추출
+> - df[["col1", "col2"]]: col1, col2 열을 df 형태로 추출
+
+- 실무 조언: 
+> 1. 공장에서 data를 받아오면, 열 개수만 50개가 넘는 경우가 많다. 
+이런 상황에서, 내가 분석할 수 있는 데이터만 indexing으로 가져와서 분석하는 것이 가장 효과적이다. 
+그래야 보기도 쉽고 다루기도 어렵지 않다. 실무에서는 indexing해서 분석해야 한다.
+> 2. 여러 함수를 조합해서 사용할 수 있다. (선후관계)
+>> - df1[["Product_Type", "Bank"]].head(1000) : 선 지정 열 2개, 후 상위 행 1천개
+>> - df1.head(1000)[["Product_Type", "Bank"]] : 선 상위 행 1천개, 후 지정 열 2 개 
+
 
 
 ## dtype별 확인할 사항들
@@ -11,7 +33,7 @@
 > df["col"].sum(axis=0)
 - 요약 통계량으로 한번에
 > [df.describe()](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html)
-- df.select_dtypes(include=np.number).mean(axis=0), df.select_dtypes(include=np.number).sum(axis=0)
+- df.select_dtypes(include=np.number).mean(axis=0)
 
 
 ### 문자 데이터
@@ -30,6 +52,8 @@
 
 ##  structured data 
 - 직접 입력
+> - Series : pd.Series([a1, a2, ..., an]), 단 {an}은 같은 dtype (**Python List**)
+> - DataFrame : pd.DataFrame({"key1": [value11, value12, ..., value1N], "key2":[value21, value22, ..., value2N]}) (**Python Dictionary**)
 - 불러오기:
 > - read_csv() : comma seperated value
 > - read_excel()
@@ -39,7 +63,7 @@
 
 
 ## Pandas data structure
-- Series: index-value(dtype 통일)
+- Series: index-value (value의 dtype 1개)
 - DataFrame: ser의 집합, index-value를 갖는 ser를 axis=1로 concat한 것 (vct, mtx)
 structured data이므로 index-column-value를 확인한다.
 > - df.info(): - df.columns와 df.index를 한번에 (+항목별 dtype) 확인, 구조와 타입을 확인
@@ -69,5 +93,6 @@ structured data이므로 index-column-value를 확인한다.
 > 4. 예측적 데이터 분석(PDA)
  
 
-
-
+## Data Sation Class 101 
+- Numpy : 2010 이전 (2008) 
+- Pandas: 2010 이후
