@@ -9,7 +9,9 @@ cond for condition(조건)
 - cond2  = (df["col"] 논리연산자2 col type의 값2)
 > df.loc[cond1 & cond2]
 - cond3  = (df["col"] 논리연산자1 col type의 값1) & (df["col"] 논리연산자2 col type의 값2)
-> df.loc[cond1]
+> df.loc[cond3]
+
+
 ## Sorting
 
 
