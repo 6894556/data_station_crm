@@ -2,6 +2,16 @@
 
 
 
+## Filtering
+cond for condition(조건)
+- cond1  = (df["col"] 논리연산자1 col type의 값1)
+> df.loc[cond1]
+- cond2  = (df["col"] 논리연산자2 col type의 값2)
+> df.loc[cond1 & cond2]
+- cond3  = (df["col"] 논리연산자1 col type의 값1) & (df["col"] 논리연산자2 col type의 값2)
+> df.loc[cond1]
+## Sorting
+
 
 ## indexing
 - 행 단위 indexing (df로만 return)
