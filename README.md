@@ -5,8 +5,7 @@
 - 확인 방법
 > - df.describe의 col별 min, max 값 확인 (이상치 조건 찾기)
 > - cond1 = (df["col1"] 이상치 조건)
-> - df.loc[cond1]
-
+> - df.loc[cond1] <br>
 
 처리 방법(col 단위)
 - 제거
@@ -16,8 +15,13 @@
 - 다른 값으로 대체
 > - cond1 = (df["col1"] 이상치 조건)
 > - df["col1(clean)"] = df["col1"] 
-> - df.loc[cond1, "col1(clean)"] = 대체값
+    > - df.loc[cond1, "col1(clean)"] = 대체값
 > - df.loc[cond1] 
+- NaN으로 대체
+> - cond1 = (df1["col1"] 이상치 조건) <br>
+  df1.loc[cond1, "col1"] = np.nan <br>
+  cond2 = (df1["col1"].isnull()) <br>
+  df1.loc[cond2]
 
 
 - missing value로 대체
