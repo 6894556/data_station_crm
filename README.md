@@ -1,6 +1,11 @@
 # Pandas
 
-## 4-2: Outliers
+### 4-4: 유통 데이터
+#### 
+
+### 4-3: Datetime
+
+### 4-2: Outliers
  
 - 확인 방법
 > - df.describe의 col별 min, max 값 확인 (이상치 조건 찾기)
@@ -9,7 +14,7 @@
 
 처리 방법(col 단위)
 - 제거
-> - cond = (df["col1"] 이상치 조건(연산자, 값))
+> - cond1 = (df["col1"] 이상치 조건(연산자, 값))
 > - df2 = df.loc[~cond1]
 
 - 다른 값으로 대체
@@ -25,32 +30,30 @@
 > - df1.loc[cond2]
 
 
-- missing value로 대체
-> - cond1 = (df["col1"] 이상치 조건)
-> - df1.loc[cond1, "col1"] = np.nan
 
-## 4-1: Missing Values 
+### 4-1: Missing Values 
 
 결측치 확인 -> 결측치 처리(dropna or new col) -> 처리된 df 사용 & 분석
 
 - 확인 방법
-> - df.info() : Non-Null Count는 col별 null이 아닌 val의 개수
-> - df.isnull() : df의 val별 null 여부 확인 (if val is null, returns True)
->> df.loc[df["col1"].isnull()] 특정 col에 결측값이 있는 sample만 filtering
->  df.isnull().sum() : df의 col별 null-count 확인
->> [df.sum()](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.sum.html)
+> - **df.info()** : Non-Null Count는 col별 null이 아닌 val의 개수
+> - **df.isnull()** : df의 val별 null 여부 확인 (if val is null, returns True)
+>> **df.loc[df["col1"].isnull()]** : 특정 col에 결측값이 있는 sample만 filtering
+>  **df.isnull().sum()** : df의 col별 null-count 확인
+>> **[df.sum()]**(https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.sum.html)
+
 
 - 처리 방법
-> - df.dropna() : any row with null val을 drop (axis=0으로)
+> - **df.dropna()** : any row with null val을 drop (axis=0으로)
 >> 데이터 loss가 너무 크다는 단점 존재
-> - df.fillna() : df의 모든 null val을 대체할 값 지정
->> - df["col1"].fillna() : ser의 모든 null val을 대체할 값 지정
+> - **df.fillna()** : df의 모든 null val을 대체할 값 지정
+>> - **df["col1"].fillna()** : ser의 모든 null val을 대체할 값 지정
 >> - df["col1(clean)"] = df["col1"].fillna(대체값)
 >> - df["col1"].describe()의 mean 값을 긁어서 df["col1"].fillna(여기에 넣는다.)
 >> - df2 = df.drop(columns=["col1"]): col1은 df2에 필요 없으므로 drop
 
 
-## 3-4 (VIP) 
+### 3-4: VIP실습 
 filtering -> 새 df -> to_excel
 1. VIP이고 모바일 알람 수신하는 회원 filtering
 2. VIP이고 총구매금액 상위 10명 filtering
@@ -62,7 +65,7 @@ filtering -> 새 df -> to_excel
 > 2. Gender항목에 '남성' 고객들의 VIP와 Member수를 확인해 보세요!
 > 3. 배송서비스신청여부를 '신청' 또는 '미신청' 값을 입력하여, '총구매수량'이 높은 상위 100명의 명단을 엑셀 파일로 추출하는 코드를 구성해보세요!
 
-ch3 핵심: indexing, sorting, filtering
+**ch3 핵심: indexing, sorting, filtering**
 
 
 
@@ -71,7 +74,9 @@ ch3 핵심: indexing, sorting, filtering
 - 머신러닝 기법, 통계적 가설검정 기법을 원활하게 사용하기 위해서는 결측치를 반드시 처리해야 한다. 
 - 결측값 종류: - NaN (Not a Number) / None / NA
 
-## Filtering
+
+
+### 3-3: Filtering
 cond for condition(조건)
 - cond1  = (df["col"] 논리연산자1 col type의 값1)
 > df.loc[cond1]
@@ -83,15 +88,29 @@ cond for condition(조건)
 
 
 
-## Sorting
+### 3-2: Sorting
+
+#### 숫자 데이터 Sorting 
+- df.sort_values(by="col") : col 한개에 대해서 ascending sort(정렬)
+> - df.sort_values(by="col", ascending=False) : descending sort (내림차순) 
+- df.sort_values(by=["col1", "col2"]) : 선 col1 기준으로 ascending 정렬, 후 col2 기준으로 ascending 정렬
+> - df.sort_values(by=["col1", "col2"], ascending=False) : 선 col1 기준으로 descending 정렬, 후 col2 기준으로 descending 정렬
+- df.sort_values(by=["col1", "col2"], ascending=[False, True]) : 
+- \ (back slash) 넣으면 줄바꿔도 코드 작동한다.
+- 함수를 조합해서 우리가 원하는 형태로 데이터를 추출하는 방법
+> - 선 indexing, 후 sorting
+> - 선 sorting, 후 indexing
 
 
-## indexing
-- 행 단위 indexing (df로만 return)
+
+### 3-1: indexing
+#### 행 단위 indexing 
+df로만 return
 > - df.head(n): 상위 n개 행 추출
 > - df.tail(m): 하위 m개 행 추출
 > - df.iloc[row_idx_n : row_idx_m]: m행부터 n행까지 행 추출 (iloc : index location) (list sclicing과 같은 logic)
-- 열 단위 indexing (ser 또는 df를 return)
+### 열 단위 indexing 
+ser 또는 df를 return
 > - df["col"]: col열만 ser 형태로 추출
 > - df[["col"]]: col열만 df 형태로 추출
 > - df[["col1", "col2"]]: col1, col2 열을 df 형태로 추출
@@ -106,10 +125,10 @@ cond for condition(조건)
 
 
 
-## dtype별 확인할 사항들
+### dtype별 확인할 사항들
 
 
-### 숫자 데이터
+#### 숫자 데이터
 - 평균: column별 대표값은 몇인가?
 > df["col"].mean(axis=0)
 - 합: column별 합은 얼마인가?
@@ -119,7 +138,7 @@ cond for condition(조건)
 - df.select_dtypes(include=np.number).mean(axis=0)
 
 
-### 문자 데이터
+#### 문자 데이터
 - 항목 : 어떤 value가 있는가? 
 > df["col"].unique()
 - 빈도수: value별 출현 frequency
@@ -133,7 +152,7 @@ cond for condition(조건)
 
 
 
-##  structured data 
+###  structured data 
 - 직접 입력
 > - Series : pd.Series([a1, a2, ..., an]), 단 {an}은 같은 dtype (**Python List**)
 > - DataFrame : pd.DataFrame({"key1": [value11, value12, ..., value1N], "key2":[value21, value22, ..., value2N]}) (**Python Dictionary**)
@@ -145,7 +164,7 @@ cond for condition(조건)
 
 
 
-## Pandas data structure
+### Pandas data structure
 - Series: index-value (value의 dtype 1개)
 - DataFrame: ser의 집합, index-value를 갖는 ser를 axis=1로 concat한 것 (vct, mtx)
 structured data이므로 index-column-value를 확인한다.
@@ -156,7 +175,7 @@ structured data이므로 index-column-value를 확인한다.
 
 
 
-## [데이터의  형태 분류](https://deep-jin.tistory.com/entry/%EC%A0%95%ED%98%95-%EB%B0%98%EC%A0%95%ED%98%95-%EB%B9%84%EC%A0%95%ED%98%95-%EB%8D%B0%EC%9D%B4%ED%84%B0)
+### [데이터의  형태 분류](https://deep-jin.tistory.com/entry/%EC%A0%95%ED%98%95-%EB%B0%98%EC%A0%95%ED%98%95-%EB%B9%84%EC%A0%95%ED%98%95-%EB%8D%B0%EC%9D%B4%ED%84%B0)
 - 정형 데이터(Structured Data) : index-column-value e.g. csv, excel
 - 반정형 데이터(Semi-Structured Data): e.g. Schema, Meta Data, json, xml, html
 - 비정형 데이터(Unstructured Data): e.g. 영상, 이미지, 텍스트..
@@ -165,7 +184,7 @@ structured data이므로 index-column-value를 확인한다.
 
 
 
-## IT 관점에서 데이터를 처리하는 4단계
+### IT 관점에서 데이터를 처리하는 4단계
 1. 데이터 수집: 장치를 통한 또는 직접 데이터를 입력
 2. 데이터 저장: 수집된 데이터를 데이터베이스(DB)에 저장
 3. 데이터 처리: 데이터 분석 목적에 맞게 / 사용 목적에 맞게 처리
@@ -176,6 +195,6 @@ structured data이므로 index-column-value를 확인한다.
 > 4. 예측적 데이터 분석(PDA)
  
 
-## Data Sation Class 101 
+### Data Sation Class 101 
 - Numpy : 2010 이전 (2008) 
 - Pandas: 2010 이후
