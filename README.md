@@ -14,14 +14,15 @@
 
 - 다른 값으로 대체
 > - cond1 = (df["col1"] 이상치 조건)
-> - df["col1(clean)"] = df["col1"] 
-    > - df.loc[cond1, "col1(clean)"] = 대체값
+> - df["col1(clean)"] = df["col1"] <br>
+> - df.loc[cond1, "col1(clean)"] = 대체값
 > - df.loc[cond1] 
+
 - NaN으로 대체
-> - cond1 = (df1["col1"] 이상치 조건) <br>
-  df1.loc[cond1, "col1"] = np.nan <br>
-  cond2 = (df1["col1"].isnull()) <br>
-  df1.loc[cond2]
+> - cond1 = (df1["col1"] 이상치 조건)
+> - df1.loc[cond1, "col1"] = np.nan
+> - cond2 = (df1["col1"].isnull())
+> - df1.loc[cond2]
 
 
 - missing value로 대체
