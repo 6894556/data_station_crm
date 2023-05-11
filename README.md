@@ -4,6 +4,43 @@
 #### 
 
 ### 4-3: Datetime
+- 변환
+> df1["시간col1(datetime)"] = pd.to_datetime(df1["시간col1"], format="문자열 형식")
+
+- 사용
+> - df1["주문연도"] = df1["주문일(datetime)"].dt.year
+> - df1["주문월"] = df1["주문일(datetime)"].dt.month
+> - 1년 52주 중 몇주차에 주문이 되었는가?
+>> df1["주문주차"] = df1["주문일(datetime)"].dt.isocalendar().week
+> - df1["주문요일"] = df1["주문일(datetime)"].dt.day_name()
+
+- 예제
+> - 요일별 주문량
+>> sns.countplot(data=df1, x="주문요일")
+
+
+
+
+
+#### pivot table 
+df.pivot_table(index="시간col1(datetime)", values="col2", aggfunc=sum)
+- index: datetimeInde
+- values: numeric
+- aggfunc: sum, mean
+- 주문일별 물품 주문 수량의 평균
+> df1.pivot_table(index="주문일(datetime)", values="수량")
+- 주문일별 물품 주문 수량의 총합
+> df1.pivot_table(index="주문일(datetime)", values="수량", aggfunc="sum")
+
+
+
+
+#### 예제
+> - 요일별 주문량
+> - 일자별 수량합계
+
+- 배송시작일
+- 배송완료일
 
 ### 4-2: Outliers
  
@@ -85,6 +122,15 @@ cond for condition(조건)
 - cond3  = (df["col"] 논리연산자1 col type의 값1) & (df["col"] 논리연산자2 col type의 값2)
 > df.loc[cond3]
 > df.loc[~cond3]
+
+- 예제
+> 1. Contract_Type이 교체 계약인 고객 데이터만 filtering
+> 2. Overdue_count가 5회 이상인 고객 데이터만 filtering
+> 3.  Address1이 경기도이면서 Overdue_count가 5회 이상인  고객 데이터 filtering
+> 4. Age가 30 미만이면서 Overdue_count가 5회 이상인 고객 데이터 filtering
+> 5. Address1이 경기도이거나 충청도인 고객 데이터만 filtering
+> 6. Sales_Type이 렌탈이고, Overdue_count가 5회 이상인 고객 데이터만 filtering 하고 Overdue_count 기준으로 descending sort했을 때 상위 10명
+> 7. Sales_Type이 렌탈인 고객 들 중에서 Overdue_count 상위 10명 고객 데이터 filtering
 
 
 
