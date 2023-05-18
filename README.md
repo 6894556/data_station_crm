@@ -23,7 +23,7 @@
 
 
 #### pivot table 
-df.pivot_table(index="시간col1(datetime)", values="col2", aggfunc=sum)
+df.pivot_table(index="시간col1(datetime)", values="col2", aggfunc="sum")
 - index: datetimeInde
 - values: numeric
 - aggfunc: sum, mean
