@@ -242,7 +242,7 @@ structured data이므로 index-column-value를 확인한다.
 
 
 
-### [데이터의  형태 분류](https://deep-jin.tistory.com/entry/%EC%A0%95%ED%98%95-%EB%B0%98%EC%A0%95%ED%98%95-%EB%B9%84%EC%A0%95%ED%98%95-%EB%8D%B0%EC%9D%B4%ED%84%B0)
+### 데이터의  형태 분류
 - 정형 데이터(Structured Data) : index-column-value e.g. csv, excel
 - 반정형 데이터(Semi-Structured Data): e.g. Schema, Meta Data, json, xml, html
 - 비정형 데이터(Unstructured Data): e.g. 영상, 이미지, 텍스트..
