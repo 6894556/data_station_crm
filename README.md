@@ -4,19 +4,40 @@
 #### 
 
 ### 4-3: Datetime
+
+날짜 데이터
+- 배송시작일
+- 배송완료일
+- 주문일
+이 있다. 형식이 제각각이다.
+
+
 - 변환
 > df1["시간col1(datetime)"] = pd.to_datetime(df1["시간col1"], format="문자열 형식")
+> - format: 날짜 데이터 string의 [format](https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior)
+> - %Y: Year with century as a decimal number.
+> - %m: Month as a **zero-padded** decimal number.
+> - %d:Day of the month as a **zero-padded** decimal number
 
-- 사용
-> - df1["주문연도"] = df1["주문일(datetime)"].dt.year
-> - df1["주문월"] = df1["주문일(datetime)"].dt.month
-> - 1년 52주 중 몇주차에 주문이 되었는가?
->> df1["주문주차"] = df1["주문일(datetime)"].dt.isocalendar().week
-> - df1["주문요일"] = df1["주문일(datetime)"].dt.day_name()
+- df1["주문일(dt)"] = pd.to_datetime(df1["주문일"], format="%Y%m%d")
+- df1["주문연도"] = df1["주문일(dt)"].dt.year
+- df1["주문월"] = df1["주문일(dt)"].dt.month
+- 1년 52주 중 몇주차에 주문이 되었는가?
+- df1["주문주차"] = df1["주문일(dt)"].dt.isocalendar().week
+- df1["주문요일"] = df1["주문일(dt)"].dt.day_name()
 
-- 예제
-> - 요일별 주문량
->> sns.countplot(data=df1, x="주문요일")
+
+
+#### 예제
+- 요일별 주문량
+> `sns.countplot(data=df1, x="주문요일")`
+- 주문일별 상품구매금액의 총합
+> `sns.lineplot(data=df1, x="주문일(dt)", y="상품구매금액", estimator="sum")`
+- 일자별 주문수량
+> `df1.pivot_table(index="주문일(dt)", values="수량", aggfunc="sum")`
+- 주문수량이 가장 많았던 일자 확인
+> - `df2 = df1.pivot_table(index="주문일(dt)", values="수량", aggfunc="sum")`
+> - `df2.sort_values(by="수량", ascending=False).head(1)`
 
 
 
