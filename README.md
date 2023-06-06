@@ -14,7 +14,8 @@
 ## 데이터를 합쳐서 분석하면 어떻게 될까?
 
 ### 5-1: [pd.concat](https://pandas.pydata.org/docs/reference/api/pandas.concat.html)
-
+- 모든 df의 행이 같을 때 사용 가능.
+- ppt 테이블 screenshot 필요
 - 집합 {df_0, df_1, ..., df_n}는 for every n in index에 대해서 same columns를 갖는다고 가정
 - csv 4개가 있다.
 - df 4개로 불러올 수 있다.
