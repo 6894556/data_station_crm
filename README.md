@@ -2,6 +2,42 @@
 
 - crm:
 - 각 장의 마지막 절은 실전연습이다.
+- jupyter 단축키
+> - tab : 자동완성
+> - shift + tab : 도움말
+> - esc: mode 전환
+> - a : above에 add cell
+> - b : below에 add cell
+> - In[n]에 작성하는 code도 중요하지만 Out[n]의 결과도 중요하다.
+>> 선 In[n]에 code 작성, 후 Out[n] 결과 독해.
+
+## 데이터를 합쳐서 분석하면 어떻게 될까?
+
+### 5-1: [pd.concat](https://pandas.pydata.org/docs/reference/api/pandas.concat.html)
+
+- 집합 {df_0, df_1, ..., df_n}는 for every n in index에 대해서 same columns를 갖는다고 가정
+- csv 4개가 있다.
+- df 4개로 불러올 수 있다.
+- df 4개를 df 1개로 묶고 싶다.
+- df 4개 col이 같다.
+- df 4개 파일명이 비슷하다. 
+- `pd.DataFrame.shape`으로 어떻게 concat 되었는지 쉽게 확인할 수 있다.
+
+
+```python
+df_raw = pd.DataFrame()
+for i in [str(i) for i in range(1, 5)]:
+    df_ = pd.read_csv("dataset/2016_health_checkup_" + i +".csv")
+    print(f'{i}: {df_.shape}')
+    df_raw = pd.concat([df_raw, df_])
+    
+# loop 이해
+# empty, 1
+# empty1, 2
+# empty12, 3
+# empty123, 4
+```
+
 
 
 
