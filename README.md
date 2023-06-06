@@ -1,9 +1,60 @@
 # data_station_crm
 
 - crm:
+- 각 장의 마지막 절은 실전연습이다.
 
-### 4-4: 유통 데이터
-#### 
+
+
+### 4-4: 유통 데이터 실습
+
+#### ?
+- pd.Series.replace({'기존val': '대체할val'}) (단, dtype=object 전제? (since `replace`))
+- sns.barplot(estimator, hue) 
+> - estimator : pivot_table(aggfunc)와 유사 
+> - hue: 문자 col을 지정하면 unique값별로 나눠줌 
+> - 정확하게는 모르겠음
+- pd.Series.apply(func)
+> - ser의 value가 func1에 하나씩 들어간다. 
+> - val 조작을 위한 함수를 만들어야 함
+> - 따라서 ser의 dtype이 중요.
+> - str.split(' ') : ' ' 공백 기준으로 split해서 list로 return
+- pd.Timedelta
+> - **timedelta**: 격차, 양을 나타내는 타입, 데이터 간의 간격을 구하는 타입, 시간 간의 차이를 계산
+> - str "7 days"가 Timedelta로 자동 변환되서 df1.loc[df1["배송기간"] > "7 days"]도 가능
+- pd.Series.astype(int)
+> ser의 val을 int 타입으로 변환
+
+
+
+#### 주중/주말 col
+> - df1["주중/주말"].unique()에서 요일 값을 긁어 오면 편하다
+> - `df1["주중/주말"] = df1["주문요일"].replace({'Thursday': '주중', 'Saturday': '주말', 'Sunday': '주말', 'Monday': '주중', 'Tuesday': '주중', 'Wednesday': '주중', 'Friday': '주중'})`
+##### pivot_table
+sum의 차이는, 일주일 중 주중이 5일, 주말이 2일이라는 점에 의한 차이일 수 있다. 따라서 건당 mean을 살펴보자.
+- (주문 당) 상품구매금액의 평균: 비슷하다. 
+##### sns.barplot
+`estimator`와 `hue`가 핵심
+- 매출액비교
+> - `sns.barplot(data=df1, x="주중/주말", y="상품구매금액", **estimator="sum"**, errorbar=None)`
+- 주문경로별 매출액 비교
+> - `sns.barplot(data=df1, x="주중/주말", y="상품구매금액", estimator="sum", errorbar=None, **hue="주문경로"**)` 
+> - **Insight**: 주중/주말에 따라서 주문경로에 차이가 있다. 주말에는 모바일웹 매출액이 가장 높다.
+
+#### 배송기간 col
+col 만들기: apply(적절한 함수 만들기) -> to_datetime
+- 배송시작일(dt) 
+> - 오전 8:56 format 이다. 따라서 pd.to_datetime 사용 못한다. 
+> - 그래서 pd.Series.apply(func) 사용한다.
+- 배송완료일(dt): 배송시작일과 동일한 방법 적용
+- 배송기간(td)
+> - '배송시작일'과 '배송완료일' col이 datetime 타입이라서 subtract 가능
+> - subtract후 return 되는 pd.Series의 val이 pd.Timedelta 타입이다.
+
+##### filtering
+- 배송기간이 4days 보다 오래 걸린 데이터 filtering
+> string "4 days"는 pd.Timedelta(days=4)로 pandas에 의해 자동변환 된다.
+- 배송기간 > 7일인 데이터 filtering
+> 7일 이상 걸린 배송만 to_excel
 
 ### 4-3: Datetime
 
@@ -124,6 +175,7 @@ filtering -> 새 df -> to_excel
 > 1. Address항목에서 '수지구'에 사는 고객들의 VIP와 Member 수를 확인해 보세요!
 > 2. Gender항목에 '남성' 고객들의 VIP와 Member수를 확인해 보세요!
 > 3. 배송서비스신청여부를 '신청' 또는 '미신청' 값을 입력하여, '총구매수량'이 높은 상위 100명의 명단을 엑셀 파일로 추출하는 코드를 구성해보세요!
+- `to_excel`: 파일로 저장해서 갖고 있으면, 나중에 처리 작업을 반복하지 않아도 된다. 매번 처리 작업을 반복하지 않아도 된다.
 
 **ch3 핵심: indexing, sorting, filtering**
 
