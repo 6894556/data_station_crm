@@ -11,7 +11,65 @@
 > - In[n]에 작성하는 code도 중요하지만 Out[n]의 결과도 중요하다.
 >> 선 In[n]에 code 작성, 후 Out[n] 결과 독해.
 
-## 데이터를 합쳐서 분석하면 어떻게 될까?
+## 5. 데이터를 합쳐서 분석하면 어떻게 될까?
+
+### 5-3[pd.DataFrame.pivot_table](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.pivot_table.html)
+
+#### Big Picture
+pivot_tabel(index, columns, values, aggfunc)
+> argument에 list를 넣을 수 있다.
+- 정확한 제품별 매출 증감액 & 증감률 구하기
+- 이번 시간: `pivot_table`로 데이터를 요약 & 정리
+- 다음 시간: `melt`로 정리 & 요약된 데이터를 풀기
+- 데이터를 뽑았을 때 정리된 형태로 뽑혔다면, 데이터를 풀어헤쳐야 한다. 
+> 이 때, `melt`를 사용한다.
+
+#### ?
+01. Channel별 Amount_Month의 mean
+02. Channel과 Gender별 Amount_Month의 mean
+03. Gender와 Channel에 따른 Amount_Month의 sum
+04. Gender와 Channel에 따른 Amount_Month와 Overdue_count의 sum
+05. Gender와 Channel에 따른 Amount_Month와 Overdue_count의 sum, min, max 
+06. Datetime별 Sales_Type에 따른 Amount_Month의 sum
+> 577 columns 너무 많다. DateTimeIndex 처리해서 월별, 연도별 매출액 계산해보자.
+07. Channel에 따른 월별 Amount_Month의 sum
+08. Sales_Type에 따른 월별 Amount_Month의 mean
+09. Sales_Type에 따른 월별 Amount_Month의 sum (19년, 20년 구분 없는 월별 매출의 추이)
+10. Sales_Type에 따른 연도별, 월별 Amount_Month의 sum (19년, 20년 구분 없는 월별 매출의 추이)
+11. Bank에 따른 월별 Amount_Month의 sum
+12. Bank에 따른 월별 Amount_Month의 sum과 월별 합 (margins=True)
+13. Product_Type에 따른 Amount_Month의 sum과 전체 합 (제품별합, 전체합)
+14. Product_Type에 따른 연도별 Amount_Month의 sum (제품별합, 전체합) 
+15. Product_Type에 따른 연도별 Amount_Month의 차이 (19년도 -> 20년도 증감액)
+16. 19년도 1-8월 데이터와 20년도 전체 데이터만 추출(filtering)하기
+17. 19년도 1-8월, 20년도 전체(1-8월) product type에 따른 연도별 Amount_Month의 sum
+18. 1-8월 증감액 & 증감률
+> - `증감률 = 증감액 / 전년도 + 이번년도`
+> - 실제로 19년 대비 매출이 약 50%정도 대폭 감소했다. 
+
+
+- index와 values, aggfunc에 list 형태 구조를 집어 넣을 수 있다.
+- 동시에 2개의 범주형 항목으로 데이터를 나누어 2개의 숫자형 항목 데이터에 대한 통계량 계산
+- aggfunc: default는 `numpy.mean`이다.
+- `margins=True`: 총합 계산
+> All이 index 마지막에 붙는다. 모든 은행 총합 값 (강력한 기능)
+- Datetime: 영업일자, 계약일자 (csv 파일별 description 페이지가 필요함)
+- erp(전사적 자원 관리): 데이터가 모여있는 공간
+- 실무에서 많이 보는 항목: 전년 대비 매출 증감률, 고객 증감률
+- pivot_table을 잘 사용하면, 다양하고 많은 데이터에서 데이터를 항목별로 나눠서, 특정 값에 대한 통계량을 확인하면서, 인사이트를 얻을 수 있다. 
+- `df3[2020] - df3[2019]`: dt index가 아니라 col이름
+> 제품별 매출 증감액 (음의 값이므로 줄었다.)
+- 정확한 제품별 매출 증감액
+> 19년도는 1-12월 데이터가 있지만 20년도는 1-8월 데이터만 있으므로 1-8월 증감만 계산해야 정확한 **증감액**과 **증감률**을 계산할 수 있다.
+- 19년도, 20년도에 몇월부터 몇월까지의 데이터가 있는지 확인하는 방법:
+> - 20년도:`cond1 = (df1["Year"] == 2020) df1.loc[cond1]["Month"].unique() # 20년도는 정확히 1-8월 데이터만 있음`
+> - 19년도: `cond1 = (df1["Year"] == 2019) df1.loc[cond1]["Month"].unique() # 19년도는 정확히 1-12월 데이터가 있음`
+- 19년도 1-8월 데이터와 20년도 전체 데이터만 추출(filtering)하기
+> - `cond1 = df1["Year"] == 2019 cond2 = (df1["Month"] <= 8) cond3 = (df1["Year"] == 2020) df4 = df1.loc[(cond1 & cond2) | cond3]`
+- 증감률이 0보다 작다는 것은 매출액이 줄었다는 것을 뜻한다.
+
+
+### 5-2: [pd.merge](https://pandas.pydata.org/docs/reference/api/pandas.merge.html?highlight=merge#pandas.merge)
 
 ### 5-1: [pd.concat](https://pandas.pydata.org/docs/reference/api/pandas.concat.html)
 - 모든 df의 행이 같을 때 사용 가능.
