@@ -71,7 +71,24 @@ pivot_tabel(index, columns, values, aggfunc)
 
 ### 5-2: [pd.merge](https://pandas.pydata.org/docs/reference/api/pandas.merge.html?highlight=merge#pandas.merge)
 
+pd.merge(df1, df2, on, how)
+> - on: key col
+> - how:
+
+- df1에는 고객 4396명 정보가 있다.
+- df3에는 고객 1383명 정보가 있다. 
+- df3 `회원번호`는 df1 `회원번호`의 subset 인가? 
+- `구매금액`과 `구매수량` col은 고객 1383명만 있다.
+- df3을 구매특성 df라고 하자.
+- index는 key col로 사용할 수 없다.
+> index를 key col로 사용하기 위해 `reset_index` 사용한다.
+- 어차피 분석하려면 missing val 지워야 한다. 
+> 따라서 inner join으로 병합한 df 사용하자.
+- 그냥 붙이면 중복되거나, 누락되는 일이 발생할 수 있다.
+> 데이터 구조, 타입에 맞는 적절한 병합 방법을 우리가 찾아서 사용해야 한다.
+
 ### 5-1: [pd.concat](https://pandas.pydata.org/docs/reference/api/pandas.concat.html)
+
 - 모든 df의 행이 같을 때 사용 가능.
 - ppt 테이블 screenshot 필요
 - 집합 {df_0, df_1, ..., df_n}는 for every n in index에 대해서 same columns를 갖는다고 가정
