@@ -13,7 +13,24 @@
 
 ## 5. 데이터를 합쳐서 분석하면 어떻게 될까?
 
-### 5-3[pd.DataFrame.pivot_table](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.pivot_table.html)
+
+
+
+
+### 5-4 [pd.DataFrame.melt]
+`df.melt(id_vars)`
+> `df.melt(id_vars).rename(columns={"col1": "col1*"})`
+
+#### 1 
+[제품명, 날짜] col만 남긴 `df` 사용
+- 목표: 제품명별 매출액 barplot
+
+#### 2
+[날짜] 제외한 모든 col을 `melt(id_vars)`에 집어넣은 `df` 사용
+- 목표: 최대 19년도, 20년도 12월 매출액 증감률 갖는 제품명 
+
+
+### 5-3 [pd.DataFrame.pivot_table](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.pivot_table.html)
 
 #### Big Picture
 pivot_tabel(index, columns, values, aggfunc)
