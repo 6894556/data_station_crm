@@ -8,6 +8,7 @@
 > - esc: mode 전환
 > - a : above에 add cell
 > - b : below에 add cell
+> - View / Toggle Line Numbers
 > - In[n]에 작성하는 code도 중요하지만 Out[n]의 결과도 중요하다.
 >> 선 In[n]에 code 작성, 후 Out[n] 결과 독해.
 
