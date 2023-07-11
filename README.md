@@ -4,6 +4,7 @@
 - 각 장의 마지막 절은 실전연습이다.
 - jupyter 단축키
 > - tab : 자동완성
+> - F: Find and Replace
 > - shift + tab : 도움말
 > - esc: mode 전환
 > - a : above에 add cell
